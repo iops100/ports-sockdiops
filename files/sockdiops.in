@@ -1,0 +1,29 @@
+#!/bin/sh
+#
+# $FreeBSD$
+#
+
+# PROVIDE: sockdiops
+# REQUIRE: NETWORKING
+# KEYWORD: shutdown
+
+#
+# Add the following lines to /etc/rc.conf to enable sockdiops:
+#
+#sockdiops_enable="YES"
+#
+
+. /etc/rc.subr
+
+name=sockdiops
+rcvar=sockdiops_enable
+
+command=%%PREFIX%%/sbin/sockdiops
+pidfile=/var/run/sockdiops.pid
+required_files=%%PREFIX%%/etc/sockdiops.conf
+
+sockdiops_enable=${sockdiops_enable:-"NO"}
+sockdiops_flags=${sockdiops_flags:-"-D"}
+
+load_rc_config $name
+run_rc_command "$1"
